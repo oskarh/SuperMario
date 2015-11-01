@@ -28,8 +28,8 @@ public class FireBall extends Sprite {
     boolean fireRight;
 
     Body b2body;
-    public FireBall(PlayScreen screen, float x, float y, boolean fireRight){
-        this.fireRight = fireRight;
+    public FireBall(PlayScreen screen, float x, float y, boolean isFiringRight){
+        this.fireRight = isFiringRight;
         this.screen = screen;
         this.world = screen.getWorld();
         frames = new Array<TextureRegion>();

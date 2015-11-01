@@ -39,7 +39,6 @@ public class Turtle extends Enemy {
         currentState = previousState = State.WALKING;
 
         setBounds(getX(), getY(), 16 / MarioBros.PPM, 24 / MarioBros.PPM);
-
     }
 
     @Override
@@ -93,10 +92,10 @@ public class Turtle extends Enemy {
                 break;
         }
 
-        if(velocity.x > 0 && region.isFlipX() == false){
+        if(velocity.x > 0 && !region.isFlipX()){
             region.flip(true, false);
         }
-        if(velocity.x < 0 && region.isFlipX() == true){
+        if(velocity.x < 0 && region.isFlipX()){
             region.flip(true, false);
         }
         stateTime = currentState == previousState ? stateTime + dt : 0;
@@ -122,7 +121,7 @@ public class Turtle extends Enemy {
     @Override
     public void hitOnHead(Mario mario) {
         if(currentState == State.STANDING_SHELL) {
-            if(mario.b2body.getPosition().x > b2body.getPosition().x)
+            if(mario.getBody().getPosition().x > b2body.getPosition().x)
                 velocity.x = -2;
             else
                 velocity.x = 2;
@@ -137,7 +136,7 @@ public class Turtle extends Enemy {
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-        reverseVelocity(true, false);
+        reverseVelocity();
     }
 
     public void kick(int direction){

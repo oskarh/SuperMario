@@ -124,8 +124,6 @@ public class PlayScreen implements Screen{
 
     @Override
     public void show() {
-
-
     }
 
     public void handleInput(float dt){
@@ -133,10 +131,10 @@ public class PlayScreen implements Screen{
         if(player.currentState != Mario.State.DEAD) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && !player.isJumping())
                 player.jump();
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
-                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
-                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.getBody().getLinearVelocity().x <= 2)
+                player.getBody().applyLinearImpulse(new Vector2(0.1f, 0), player.getBody().getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.getBody().getLinearVelocity().x >= -2)
+                player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0), player.getBody().getWorldCenter(), true);
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
                 player.fire();
         }
@@ -166,7 +164,7 @@ public class PlayScreen implements Screen{
 
         //attach our gamecam to our players.x coordinate
         if(player.currentState != Mario.State.DEAD) {
-            gamecam.position.x = player.b2body.getPosition().x;
+            gamecam.position.x = player.getBody().getPosition().x;
         }
 
         //update our gamecam with correct coordinates after changes
@@ -213,10 +211,7 @@ public class PlayScreen implements Screen{
     }
 
     public boolean gameOver(){
-        if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3){
-            return true;
-        }
-        return false;
+        return player.currentState == Mario.State.DEAD && player.getStateTimer() > 3;
     }
 
     @Override
@@ -235,17 +230,14 @@ public class PlayScreen implements Screen{
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
