@@ -25,6 +25,7 @@ import com.brentaureli.mariobros.Sprites.Enemies.*;
  * Created by brentaureli on 8/27/15.
  */
 public class Mario extends Sprite {
+
     public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD };
     public State currentState;
     public State previousState;
@@ -49,6 +50,8 @@ public class Mario extends Sprite {
     private boolean timeToRedefineMario;
     private boolean marioIsDead;
     private PlayScreen screen;
+
+    private int nrGroundContacts;
 
     private Array<FireBall> fireballs;
 
@@ -265,7 +268,8 @@ public class Mario extends Sprite {
                 MarioBros.ENEMY_BIT |
                 MarioBros.OBJECT_BIT |
                 MarioBros.ENEMY_HEAD_BIT |
-                MarioBros.ITEM_BIT;
+                MarioBros.ITEM_BIT |
+                MarioBros.PIPE_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -301,7 +305,8 @@ public class Mario extends Sprite {
                 MarioBros.ENEMY_BIT |
                 MarioBros.OBJECT_BIT |
                 MarioBros.ENEMY_HEAD_BIT |
-                MarioBros.ITEM_BIT;
+                MarioBros.ITEM_BIT |
+                MarioBros.PIPE_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -334,7 +339,8 @@ public class Mario extends Sprite {
                 MarioBros.ENEMY_BIT |
                 MarioBros.OBJECT_BIT |
                 MarioBros.ENEMY_HEAD_BIT |
-                MarioBros.ITEM_BIT;
+                MarioBros.ITEM_BIT |
+                MarioBros.PIPE_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -356,5 +362,17 @@ public class Mario extends Sprite {
         super.draw(batch);
         for(FireBall ball : fireballs)
             ball.draw(batch);
+    }
+
+    public void touchedGround() {
+        nrGroundContacts++;
+    }
+
+    public void leftGround() {
+        nrGroundContacts--;
+    }
+
+    public boolean isJumping() {
+        return nrGroundContacts == 0;
     }
 }

@@ -1,6 +1,5 @@
 package com.brentaureli.mariobros.Tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -39,6 +38,7 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy)fixB.getUserData()).hitOnHead((Mario) fixA.getUserData());
                 break;
             case MarioBros.ENEMY_BIT | MarioBros.OBJECT_BIT:
+            case MarioBros.ENEMY_BIT | MarioBros.PIPE_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_BIT)
                     ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
                 else
@@ -55,6 +55,7 @@ public class WorldContactListener implements ContactListener {
                 ((Enemy)fixB.getUserData()).hitByEnemy((Enemy)fixA.getUserData());
                 break;
             case MarioBros.ITEM_BIT | MarioBros.OBJECT_BIT:
+            case MarioBros.ITEM_BIT | MarioBros.PIPE_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.ITEM_BIT)
                     ((Item)fixA.getUserData()).reverseVelocity(true, false);
                 else
@@ -72,11 +73,35 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((FireBall)fixB.getUserData()).setToDestroy();
                 break;
+            case MarioBros.PIPE_BIT | MarioBros.MARIO_BIT:
+            case MarioBros.GROUND_BIT | MarioBros.MARIO_BIT:
+            case MarioBros.COIN_BIT | MarioBros.MARIO_BIT:
+            case MarioBros.BRICK_BIT | MarioBros.MARIO_BIT:
+                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_BIT)
+                    ((Mario) fixA.getUserData()).touchedGround();
+                else
+                    ((Mario) fixB.getUserData()).touchedGround();
+                break;
         }
     }
 
     @Override
     public void endContact(Contact contact) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
+
+        switch (cDef) {
+            case MarioBros.GROUND_BIT | MarioBros.MARIO_BIT:
+            case MarioBros.COIN_BIT | MarioBros.MARIO_BIT:
+            case MarioBros.BRICK_BIT | MarioBros.MARIO_BIT:
+            case MarioBros.PIPE_BIT | MarioBros.MARIO_BIT:
+                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_BIT)
+                    ((Mario) fixA.getUserData()).leftGround();
+                else
+                    ((Mario) fixB.getUserData()).leftGround();
+                break;
+        }
     }
 
     @Override

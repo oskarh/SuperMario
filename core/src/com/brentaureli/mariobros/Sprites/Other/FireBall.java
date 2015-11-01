@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.brentaureli.mariobros.MarioBros;
@@ -58,7 +57,8 @@ public class FireBall extends Sprite {
                 MarioBros.COIN_BIT |
                 MarioBros.BRICK_BIT |
                 MarioBros.ENEMY_BIT |
-                MarioBros.OBJECT_BIT;
+                MarioBros.OBJECT_BIT |
+                MarioBros.PIPE_BIT;
 
         fdef.shape = shape;
         fdef.restitution = 1;
