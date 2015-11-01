@@ -55,7 +55,7 @@ public class Mario extends Sprite {
 
     private Array<FireBall> fireballs;
 
-    public Mario(PlayScreen screen){
+    public Mario(PlayScreen screen, float x, float y){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -99,7 +99,7 @@ public class Mario extends Sprite {
         marioDead = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 96, 0, 16, 16);
 
         //define mario in Box2d
-        defineMario();
+        defineMario(x, y);
 
         //set initial values for marios location, width and height. And initial frame as marioStand.
         setBounds(0, 0, 16 / MarioBros.PPM, 16 / MarioBros.PPM);
@@ -129,7 +129,7 @@ public class Mario extends Sprite {
                 fireballs.removeValue(ball, true);
         }
 
-        if (getBody().getPosition().y < 0) {
+        if (getBody().getPosition().y < 0 && !(currentState == State.DEAD)) {
             currentState = State.DEAD;
             previousState = State.DEAD;
             stateTimer = 4;
@@ -336,9 +336,9 @@ public class Mario extends Sprite {
         timeToDefineBigMario = false;
     }
 
-    public void defineMario(){
+    public void defineMario(float x, float y){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / MarioBros.PPM, 32 / MarioBros.PPM);
+        bdef.position.set(x / MarioBros.PPM, y / MarioBros.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
