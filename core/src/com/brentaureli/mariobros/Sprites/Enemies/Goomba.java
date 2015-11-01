@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.brentaureli.mariobros.MarioBros;
+import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Screens.PlayScreen;
 import com.brentaureli.mariobros.Sprites.Mario;
 
@@ -101,6 +102,7 @@ public class Goomba extends com.brentaureli.mariobros.Sprites.Enemies.Enemy
     @Override
     public void hitOnHead(Mario mario) {
         setToDestroy = true;
+        Hud.addScore(100);
         MarioBros.manager.get("audio/sounds/stomp.wav", Sound.class).play();
     }
 
