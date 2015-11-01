@@ -71,7 +71,8 @@ public class Goomba extends com.brentaureli.mariobros.Sprites.Enemies.Enemy
                 MarioBros.BRICK_BIT |
                 MarioBros.ENEMY_BIT |
                 MarioBros.OBJECT_BIT |
-                MarioBros.MARIO_BIT;
+                MarioBros.MARIO_BIT |
+                MarioBros.PIPE_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);

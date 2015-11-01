@@ -5,7 +5,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.brentaureli.mariobros.Screens.PlayScreen;
 
 public class MarioBros extends Game {
@@ -15,18 +14,19 @@ public class MarioBros extends Game {
 	public static final float PPM = 100;
 
 	//Box2D Collision Bits
-	public static final short NOTHING_BIT = 0;
-	public static final short GROUND_BIT = 1;
-	public static final short MARIO_BIT = 2;
-	public static final short BRICK_BIT = 4;
-	public static final short COIN_BIT = 8;
-	public static final short DESTROYED_BIT = 16;
-	public static final short OBJECT_BIT = 32;
-	public static final short ENEMY_BIT = 64;
-	public static final short ENEMY_HEAD_BIT = 128;
-	public static final short ITEM_BIT = 256;
-	public static final short MARIO_HEAD_BIT = 512;
-	public static final short FIREBALL_BIT = 1024;
+	public static final short NOTHING_BIT     = 0;
+	public static final short GROUND_BIT      = 1 << 0;
+	public static final short MARIO_BIT       = 1 << 1;
+	public static final short BRICK_BIT       = 1 << 2;
+	public static final short COIN_BIT        = 1 << 3;
+	public static final short DESTROYED_BIT   = 1 << 4;
+	public static final short OBJECT_BIT      = 1 << 5;
+	public static final short ENEMY_BIT       = 1 << 6;
+	public static final short ENEMY_HEAD_BIT  = 1 << 7;
+	public static final short ITEM_BIT        = 1 << 8;
+	public static final short MARIO_HEAD_BIT  = 1 << 9;
+	public static final short FIREBALL_BIT    = 1 << 10;
+	public static final short PIPE_BIT        = 1 << 11;
 
 	public SpriteBatch batch;
 
