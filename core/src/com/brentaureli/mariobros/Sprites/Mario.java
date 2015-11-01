@@ -26,12 +26,12 @@ import com.brentaureli.mariobros.Sprites.Enemies.*;
  */
 public class Mario extends Sprite {
 
-    public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD };
+    public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD }
     public State currentState;
     public State previousState;
 
     public World world;
-    public Body b2body;
+    private Body b2body;
 
     private TextureRegion marioStand;
     private Animation marioRun;
@@ -43,7 +43,7 @@ public class Mario extends Sprite {
     private Animation growMario;
 
     private float stateTimer;
-    private boolean runningRight;
+    private boolean isRunningRight;
     private boolean marioIsBig;
     private boolean runGrowAnimation;
     private boolean timeToDefineBigMario;
@@ -62,7 +62,7 @@ public class Mario extends Sprite {
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
-        runningRight = true;
+        isRunningRight = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -161,15 +161,15 @@ public class Mario extends Sprite {
         }
 
         //if mario is running left and the texture isnt facing left... flip it.
-        if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
+        if((b2body.getLinearVelocity().x < 0 || !isRunningRight) && !region.isFlipX()){
             region.flip(true, false);
-            runningRight = false;
+            isRunningRight = false;
         }
 
         //if mario is running right and the texture isnt facing right... flip it.
-        else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()){
+        else if((b2body.getLinearVelocity().x > 0 || isRunningRight) && region.isFlipX()){
             region.flip(true, false);
-            runningRight = true;
+            isRunningRight = true;
         }
 
         //if the current state is the same as the previous state increase the state timer.
@@ -355,7 +355,7 @@ public class Mario extends Sprite {
     }
 
     public void fire(){
-        fireballs.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
+        fireballs.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, isRunningRight));
     }
 
     public void draw(Batch batch){
@@ -374,5 +374,9 @@ public class Mario extends Sprite {
 
     public boolean isJumping() {
         return nrGroundContacts == 0;
+    }
+
+    public Body getBody() {
+        return b2body;
     }
 }

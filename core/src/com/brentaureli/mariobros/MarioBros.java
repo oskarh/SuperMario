@@ -15,7 +15,7 @@ public class MarioBros extends Game {
 
 	//Box2D Collision Bits
 	public static final short NOTHING_BIT     = 0;
-	public static final short GROUND_BIT      = 1 << 0;
+	public static final short GROUND_BIT      = 1;
 	public static final short MARIO_BIT       = 1 << 1;
 	public static final short BRICK_BIT       = 1 << 2;
 	public static final short COIN_BIT        = 1 << 3;

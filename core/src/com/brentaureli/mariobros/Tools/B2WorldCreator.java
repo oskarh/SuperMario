@@ -22,6 +22,14 @@ import com.brentaureli.mariobros.Sprites.Enemies.Goomba;
  * Created by brentaureli on 8/28/15.
  */
 public class B2WorldCreator {
+
+    public static final String GROUND_LAYER = "Ground";
+    public static final String PIPES_LAYER = "Pipes";
+    public static final String BRICKS_LAYER = "Bricks";
+    public static final String COINS_LAYER = "Coins";
+    public static final String GOOMBAS_LAYER = "Goombas";
+    public static final String TURTLES_LAYER = "Turtles";
+
     private Array<Goomba> goombas;
     private Array<Turtle> turtles;
 
@@ -35,7 +43,7 @@ public class B2WorldCreator {
         Body body;
 
         //create ground bodies/fixtures
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(GROUND_LAYER).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -49,7 +57,7 @@ public class B2WorldCreator {
         }
 
         //create pipe bodies/fixtures
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(PIPES_LAYER).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -69,32 +77,28 @@ public class B2WorldCreator {
         }
 
         //create brick bodies/fixtures
-        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(BRICKS_LAYER).getObjects().getByType(RectangleMapObject.class)){
             new Brick(screen, object);
         }
 
         //create coin bodies/fixtures
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
-
+        for(MapObject object : map.getLayers().get(COINS_LAYER).getObjects().getByType(RectangleMapObject.class)){
             new Coin(screen, object);
         }
 
         //create all goombas
         goombas = new Array<Goomba>();
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(GOOMBAS_LAYER).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             goombas.add(new Goomba(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
         }
         turtles = new Array<Turtle>();
-        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(TURTLES_LAYER).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             turtles.add(new Turtle(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
         }
     }
 
-    public Array<Goomba> getGoombas() {
-        return goombas;
-    }
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(goombas);
