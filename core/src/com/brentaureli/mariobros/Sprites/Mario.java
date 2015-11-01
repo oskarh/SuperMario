@@ -110,6 +110,8 @@ public class Mario extends Sprite {
     }
 
     public void update(float dt){
+
+        System.out.println("Current pos " + getBody().getPosition());
         //update our sprite to correspond with the position of our Box2D body
         if(marioIsBig)
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / MarioBros.PPM);
@@ -128,6 +130,18 @@ public class Mario extends Sprite {
                 fireballs.removeValue(ball, true);
         }
 
+        if (getBody().getPosition().y < 0) {
+            currentState = State.DEAD;
+            previousState = State.DEAD;
+            stateTimer = 4;
+            playGameOverSound();
+        }
+
+    }
+
+    private void playGameOverSound() {
+        MarioBros.manager.get("audio/music/mario_music.ogg", Music.class).stop();
+        MarioBros.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
     }
 
     public TextureRegion getFrame(float dt){
@@ -202,12 +216,14 @@ public class Mario extends Sprite {
             return State.STANDING;
     }
 
-    public void grow(){
-        runGrowAnimation = true;
-        marioIsBig = true;
-        timeToDefineBigMario = true;
-        setBounds(getX(), getY(), getWidth(), getHeight() * 2);
-        MarioBros.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+    public void grow() {
+        if (!marioIsBig) {
+            runGrowAnimation = true;
+            marioIsBig = true;
+            timeToDefineBigMario = true;
+            setBounds(getX(), getY(), getWidth(), getHeight() * 2);
+            MarioBros.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+        }
     }
 
     public boolean isDead(){
@@ -237,8 +253,7 @@ public class Mario extends Sprite {
                 setBounds(getX(), getY(), getWidth(), getHeight() / 2);
                 MarioBros.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
             } else {
-                MarioBros.manager.get("audio/music/mario_music.ogg", Music.class).stop();
-                MarioBros.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
+                playGameOverSound();
                 marioIsDead = true;
                 Filter filter = new Filter();
                 filter.maskBits = MarioBros.NOTHING_BIT;
