@@ -252,7 +252,6 @@ public class Mario extends Sprite {
     public void redefineMario(){
         Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);
-
         BodyDef bdef = new BodyDef();
         bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -365,6 +364,7 @@ public class Mario extends Sprite {
     }
 
     public void touchedGround() {
+        getBody().setLinearVelocity(getBody().getLinearVelocity().x, 0);
         nrGroundContacts++;
     }
 

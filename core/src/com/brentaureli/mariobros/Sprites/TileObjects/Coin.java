@@ -3,7 +3,6 @@ package com.brentaureli.mariobros.Sprites.TileObjects;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Scenes.Hud;
@@ -39,7 +38,7 @@ public class Coin extends InteractiveTileObject {
             else
                 MarioBros.manager.get("audio/sounds/coin.wav", Sound.class).play();
             getCell().setTile(tileSet.getTile(BLANK_COIN));
-            Hud.addScore(100);
+            Hud.addScore(200);
         }
     }
 }

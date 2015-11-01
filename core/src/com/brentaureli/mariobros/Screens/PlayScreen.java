@@ -60,6 +60,7 @@ public class PlayScreen implements Screen{
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
+    private float lastCameraPosition = 2;
 
     public PlayScreen(MarioBros game){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
@@ -97,7 +98,7 @@ public class PlayScreen implements Screen{
         music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
-        //music.play();
+        music.play();
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
@@ -162,9 +163,10 @@ public class PlayScreen implements Screen{
 
         hud.update(dt);
 
-        //attach our gamecam to our players.x coordinate
+        //attach our gamecam to our players.x coordinate, never move the camera backwards, like in the original super mario bros
         if(player.currentState != Mario.State.DEAD) {
-            gamecam.position.x = player.getBody().getPosition().x;
+            gamecam.position.x = Math.max(lastCameraPosition, player.getBody().getPosition().x);
+            lastCameraPosition = gamecam.position.x;
         }
 
         //update our gamecam with correct coordinates after changes

@@ -34,7 +34,8 @@ public class WorldContactListener implements ContactListener {
             case MarioBros.ENEMY_HEAD_BIT | MarioBros.MARIO_BIT:
                 Mario mario = (Mario) (fixA.getUserData() instanceof Mario ? fixA.getUserData() : fixB.getUserData());
                 // Only kill enemies if we're landing on them, ie not if we're jumping and hit an enemy on our way up
-                if (mario.getBody().getLinearVelocity().y < 0) {
+                System.out.println("Linear velocity " + mario.getBody().getLinearVelocity().y);
+                if (mario.getBody().getLinearVelocity().y < 0 && mario.isJumping()) {
                     if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_HEAD_BIT)
                         ((Enemy)fixA.getUserData()).hitOnHead((Mario) fixB.getUserData());
                     else
